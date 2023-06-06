@@ -63,6 +63,13 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "app.h"
 #include "appgen.h"
 #include "system_definitions.h"
+#include "GesPec12.h"
+#include "GesS9.h"
+#include "Generateur.h"
+
+
+#define INIT_TIME 2999  //Init time in [ms]
+#define MACHINE_CYCLE 10  //Cycle for execution sequence in [ms]
 
 // *****************************************************************************
 // *****************************************************************************
@@ -70,9 +77,63 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 
- 
+//==============================================================================
+//                          Timers Statics
+//==============================================================================
+void __ISR(_TIMER_1_VECTOR, ipl3AUTO) IntHandlerDrvTmrInstance1(void)
+{
+    static uint16_t Timer1Counter = 0;
+    static bool FlagInit = 0;
+    
+    // =================================
+    //           Initialisation
+    // =================================
+    if(FlagInit == 0)
+    {
+        if(Timer1Counter <= INIT_TIME)
+        {
+          Timer1Counter++;
+        }
+        else
+        {
+          Timer1Counter = 0;
+          FlagInit = 1;
+        }
+    }
+    // =================================
+    //           Execution
+    // =================================
+    else
+    {
+        if(Timer1Counter < (MACHINE_CYCLE-2))
+        {
+          Timer1Counter++;
+        }
+        else
+        {
+          Timer1Counter = 0;
+          APPGEN_UpdateState(APPGEN_STATE_SERVICE_TASKS);
+        }
+        // Si TCP connecté, arrêter la lecture des boutons 
+        if(GetTCPFlagState() == false)
+        {
+            ScanPec12(PEC12_A, PEC12_B, PEC12_PB);
+            ScanS9(S_OK);
+        }
+    }
+    //LED1_W = !LED1_R;
+    PLIB_INT_SourceFlagClear(INT_ID_0,INT_SOURCE_TIMER_1);
+}
+void __ISR(_TIMER_3_VECTOR, ipl7AUTO) IntHandlerDrvTmrInstance2(void)
+{
+    //LED0_W = 1;
+    GENSIG_Execute();
+    //LED0_W = 0;
+    PLIB_INT_SourceFlagClear(INT_ID_0,INT_SOURCE_TIMER_3);
+}
 
-void __ISR(_TIMER_1_VECTOR, ipl1AUTO) IntHandlerDrvTmrInstance0(void)
+
+void __ISR(_TIMER_2_VECTOR, ipl1AUTO) IntHandlerDrvTmrInstance0(void)
 {
     DRV_TMR_Tasks(sysObj.drvTmr0);
 }

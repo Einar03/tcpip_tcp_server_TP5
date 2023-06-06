@@ -59,6 +59,12 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #include "system_config.h"
 #include "system_definitions.h"
 
+//==============================================================
+//                          defines
+#define LOCAL true
+#define REMOTE false
+//==============================================================
+
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
 
@@ -88,7 +94,8 @@ typedef enum
 {
 	/* Application's state machine's initial state. */
 	APPGEN_STATE_INIT=0,
-	APPGEN_STATE_SERVICE_TASKS,
+	APPGEN_STATE_SERVICE_TASKS=1,
+    APPGEN_WAIT,
 
 	/* TODO: Define states used by the application state machine. */
 
@@ -112,7 +119,7 @@ typedef struct
 {
     /* The application's current state */
     APPGEN_STATES state;
-
+    bool newDataReceived;
     /* TODO: Define any additional data used by the application. */
 
 } APPGEN_DATA;
@@ -164,7 +171,11 @@ typedef struct
 */
 
 void APPGEN_Initialize ( void );
-
+void APPGEN_UpdateState(APPGEN_STATES NewState);
+void APPGEN_ReadDatasFromTCPBuffer(uint8_t *SerialDatas);
+void SetTCPFlag(void);
+void ResetTCPFlag(void);
+bool GetTCPFlagState(void);
 
 /*******************************************************************************
   Function:

@@ -55,9 +55,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "app.h"
 #include "Mc32DriverLcd.h"
+#include "appgen.h"
 
 #define SERVER_PORT 9760
-
+#define BYTES_TO_READ 29
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -79,7 +80,10 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     Application strings and buffers are be defined outside this structure.
 */
 
+
 APP_DATA appData;
+uint8_t MessageTxt[30] = "!S=TF=2000A=10000O=+5000WP=0#"; // 29 caracteres
+//bool SendReady = false; 
 
 
 // *****************************************************************************
@@ -143,7 +147,7 @@ void APP_Tasks ( void )
     IPV4_ADDR           ipAddr;
     int                 i, nNets;
     TCPIP_NET_HANDLE    netH;
-
+    
     SYS_CMD_READY_TO_READ();
     switch(appData.state)
     {
@@ -221,6 +225,14 @@ void APP_Tasks ( void )
                 SYS_CONSOLE_MESSAGE("Couldn't open server socket\r\n");
                 break;
             }
+            //=============================================================================================================================
+            //                                                  Code du cours
+            //=============================================================================================================================
+            appData.keepAlive.keepAliveEnable = true;
+            appData.keepAlive.keepAliveTmo = 1000;
+            appData.keepAlive.keepAliveUnackLim = 2;
+            TCPIP_TCP_OptionsSet(appData.socket, TCP_OPTION_KEEP_ALIVE, &(appData.keepAlive));
+            //=============================================================================================================================
             appData.state = APP_TCPIP_WAIT_FOR_CONNECTION;
         }
         break;
@@ -236,6 +248,10 @@ void APP_Tasks ( void )
                 // We got a connection
                 appData.state = APP_TCPIP_SERVING_CONNECTION;
                 SYS_CONSOLE_MESSAGE("Received a connection\r\n");
+                //=========================================================================================
+                // Set le flag TCP pour indiquer la connection du client TCP
+                SetTCPFlag();
+                //=========================================================================================
             }
         }
         break;
@@ -246,10 +262,14 @@ void APP_Tasks ( void )
             {
                 appData.state = APP_TCPIP_CLOSING_CONNECTION;
                 SYS_CONSOLE_MESSAGE("Connection was closed\r\n");
+                //=========================================================================================
+                // Reset le flag TCP pour indiquer la déconnection du client TCP
+                ResetTCPFlag();
+                //=========================================================================================
                 break;
             }
             int16_t wMaxGet, wMaxPut, wCurrentChunk;
-            uint16_t w, w2;
+            uint16_t w;// w2;
             uint8_t AppBuffer[32];
             // Figure out how many bytes have been received and how many we can transmit.
             wMaxGet = TCPIP_TCP_GetIsReady(appData.socket);	// Get TCP RX FIFO byte count
@@ -271,26 +291,37 @@ void APP_Tasks ( void )
 
                 // Transfer the data out of the TCP RX FIFO and into our local processing buffer.
                 TCPIP_TCP_ArrayGet(appData.socket, AppBuffer, wCurrentChunk);
-
-                // Perform the "ToUpper" operation on each data byte
-                for(w2 = 0; w2 < wCurrentChunk; w2++)
+                APPGEN_ReadDatasFromTCPBuffer(AppBuffer);
+                
+//                // Perform the "ToUpper" operation on each data byte
+//                for(w2 = 0; w2 < wCurrentChunk; w2++)
+//                {
+//                    i = AppBuffer[w2];
+//                    if(i >= 'a' && i <= 'z')
+//                    {
+//                            i -= ('a' - 'A');
+//                            AppBuffer[w2] = i;
+//                    }
+//                    else if(i == '\e')   //escape
+//                    {
+//                        appData.state = APP_TCPIP_CLOSING_CONNECTION;
+//                        SYS_CONSOLE_MESSAGE("Connection was closed\r\n");
+//                    }
+//                }
+                
+                //=========================================================================================
+                if(appData.SendReady == true)
                 {
-                    i = AppBuffer[w2];
-                    if(i >= 'a' && i <= 'z')
-                    {
-                            i -= ('a' - 'A');
-                            AppBuffer[w2] = i;
-                    }
-                    else if(i == '\e')   //escape
-                    {
-                        appData.state = APP_TCPIP_CLOSING_CONNECTION;
-                        SYS_CONSOLE_MESSAGE("Connection was closed\r\n");
-                    }
+                    ResetSendFlag();
+                    SYS_CONSOLE_PRINT("Server Sending %s\r\n", MessageTxt);
+                    TCPIP_TCP_ArrayPut(appData.socket, MessageTxt, wCurrentChunk);
+                    TCPIP_TCP_ArrayPut(appData.socket, "\r", 1);
+                    TCPIP_TCP_ArrayPut(appData.socket, "\n", 1);
                 }
-
+                //=========================================================================================
                 // Transfer the data out of our local processing buffer and into the TCP TX FIFO.
-                SYS_CONSOLE_PRINT("Server Sending %s\r\n", AppBuffer);
-                TCPIP_TCP_ArrayPut(appData.socket, AppBuffer, wCurrentChunk);
+//                SYS_CONSOLE_PRINT("Server Sending %s\r\n", AppBuffer);
+//                TCPIP_TCP_ArrayPut(appData.socket, AppBuffer, wCurrentChunk);
 
                 // No need to perform any flush.  TCP data in TX FIFO will automatically transmit itself after it accumulates for a while.  If you want to decrease latency (at the expense of wasting network bandwidth on TCP overhead), perform and explicit flush via the TCPFlush() API.
             }
@@ -310,6 +341,27 @@ void APP_Tasks ( void )
     }
 }
 
+void SetSendFlag(void)
+{
+    appData.SendReady = true;
+}
+
+void ResetSendFlag(void)
+{
+    appData.SendReady = false;
+}
+
+// Pour copier le message du générateur dans MessageTxt (tableau de app.c)
+void Update_Message(uint8_t *message)
+{
+    // Variables locales
+    //uint8_t i = 0;
+    //for(i = 0; i < 28; i++)
+    //{
+    //    MessageTxt[i] = message[i];
+    //}
+    strncpy((char*)MessageTxt, (char*)message, 29);
+}
  
 
 /*******************************************************************************

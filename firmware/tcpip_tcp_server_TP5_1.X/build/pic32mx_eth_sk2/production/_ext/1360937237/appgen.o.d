@@ -329,7 +329,11 @@ build/pic32mx_eth_sk2/production/_ext/1360937237/appgen.o: \
  ../../../../../framework/tcpip/tftps.h \
  ../../../../../framework/driver/ethmac/drv_ethmac.h \
  ../../../../../framework/driver/miim/drv_miim.h ../src/app.h \
- ../src/appgen.h ../../../../../bsp/pic32mx_skes/Mc32DriverLcd.h
+ ../src/appgen.h ../../../../../bsp/pic32mx_skes/Mc32DriverLcd.h \
+ ../src/Mc32gestSpiDac.h ../src/DefMenuGen.h ../src/MenuGen.h \
+ ../src/GesPec12.h ../src/GesS9.h ../src/Generateur.h \
+ ../src/Mc32gest_SerComm.h ../src/Mc32gestI2cSeeprom.h \
+ ../src/system_config/pic32mx_eth_sk2/framework/driver/tmr/drv_tmr_static.h
 
 ../src/appgen.h:
 
@@ -996,3 +1000,21 @@ build/pic32mx_eth_sk2/production/_ext/1360937237/appgen.o: \
 ../src/appgen.h:
 
 ../../../../../bsp/pic32mx_skes/Mc32DriverLcd.h:
+
+../src/Mc32gestSpiDac.h:
+
+../src/DefMenuGen.h:
+
+../src/MenuGen.h:
+
+../src/GesPec12.h:
+
+../src/GesS9.h:
+
+../src/Generateur.h:
+
+../src/Mc32gest_SerComm.h:
+
+../src/Mc32gestI2cSeeprom.h:
+
+../src/system_config/pic32mx_eth_sk2/framework/driver/tmr/drv_tmr_static.h:

@@ -1533,7 +1533,7 @@
       <Template dnOrder="10">
         <Name dnOrder="0">system_init.c</Name>
         <Path dnOrder="1">Source&amp;#160;Files/app/system_config/pic32mx_eth_sk2</Path>
-        <Checksum dnOrder="2">2ED2948C27B924C54412793EB6EAFD9F</Checksum>
+        <Checksum dnOrder="2">14530A51DA2605161B09ABCB879ABB63</Checksum>
       </Template>
       <Template dnOrder="11">
         <Name dnOrder="0">system_exceptions.c</Name>
@@ -1547,7 +1547,8 @@
       <Template dnOrder="13">
         <Name dnOrder="0">system_interrupt.c</Name>
         <Path dnOrder="1">Source&amp;#160;Files/app/system_config/pic32mx_eth_sk2</Path>
-        <Checksum dnOrder="2">FA03028C496D5C0F6D1A25B25E2C12FC</Checksum>
+        <Checksum dnOrder="2">6CA28EAB56AAA13C857AEF2BA90678F1</Checksum>
+        <ProjectFileChecksum dnOrder="3">B24DE0E55E17C6F3F79B0B0DE3D4BBA7</ProjectFileChecksum>
       </Template>
       <Template dnOrder="14">
         <Name dnOrder="0">sys_ports_static.c</Name>
@@ -1566,7 +1567,7 @@
       <Template dnOrder="17">
         <Name dnOrder="0">system_config.h</Name>
         <Path dnOrder="1">Header&amp;#160;Files/app/system_config/pic32mx_eth_sk2</Path>
-        <Checksum dnOrder="2">02C9F1532FA385B9FF2BB59B26FE7CA5</Checksum>
+        <Checksum dnOrder="2">EB4D94C348D633A7728C26FA92433D88</Checksum>
       </Template>
     </Templates>
     <CompilerItems dnOrder="2">

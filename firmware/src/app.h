@@ -114,12 +114,21 @@ typedef enum
 
 typedef struct
 {
+    bool keepAliveEnable;
+    uint16_t keepAliveTmo;
+    uint8_t keepAliveUnackLim;
+} ST_KEEP_ALIVE;
+
+typedef struct
+{
     /* The application's current state */
     APP_STATES state;
-
+    ST_KEEP_ALIVE keepAlive;
     TCP_SOCKET              socket;
+    bool SendReady;
 
 } APP_DATA;
+
 
 
 // *****************************************************************************
@@ -203,6 +212,11 @@ void APP_Initialize ( void );
 
 void APP_Tasks ( void );
 
+void SetSendFlag(void);
+
+void ResetSendFlag(void);
+
+void Update_Message(uint8_t *message);
 
 #endif /* _APP_H */
 /*******************************************************************************
