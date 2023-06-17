@@ -200,6 +200,7 @@ void APP_Tasks ( void )
                     return;    // interface not ready yet!
                 }
                 ipAddr.Val = TCPIP_STACK_NetAddress(netH);
+            
                 if(dwLastIP[i].Val != ipAddr.Val)
                 {
                     dwLastIP[i].Val = ipAddr.Val;
@@ -209,8 +210,9 @@ void APP_Tasks ( void )
                     SYS_CONSOLE_PRINT("%d.%d.%d.%d \r\n", ipAddr.v[0], ipAddr.v[1], ipAddr.v[2], ipAddr.v[3]);
                     
                     //=====================================================================================================================
-                    lcd_gotoxy(1,4);
-                    printf_lcd("IP:%03d.%03d.%03d.%03d ", ipAddr.v[0], ipAddr.v[1], ipAddr.v[2], ipAddr.v[3]);
+                    // Adresse IP pour la lecture et affichage
+                    SetIP_Flag();
+                    Update_IP(ipAddr.v);
                     //=====================================================================================================================
                 }
                 appData.state = APP_TCPIP_OPENING_SERVER;
@@ -315,8 +317,8 @@ void APP_Tasks ( void )
                     ResetSendFlag();
                     SYS_CONSOLE_PRINT("Server Sending %s\r\n", MessageTxt);
                     TCPIP_TCP_ArrayPut(appData.socket, MessageTxt, wCurrentChunk);
-                    TCPIP_TCP_ArrayPut(appData.socket, "\r", 1);
-                    TCPIP_TCP_ArrayPut(appData.socket, "\n", 1);
+                    TCPIP_TCP_ArrayPut(appData.socket, (uint8_t*)"\r", 1);
+                    TCPIP_TCP_ArrayPut(appData.socket, (uint8_t*)"\n", 1);
                 }
                 //=========================================================================================
                 // Transfer the data out of our local processing buffer and into the TCP TX FIFO.

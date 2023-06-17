@@ -429,7 +429,7 @@ void MENU_Execute(S_ParamGen *pParam, bool local)
                 printf_lcd("%c", textSignal[ParamDisplay.Forme][lcdPosition]);
             }
             lcd_gotoxy(1,2);
-            printf_lcd("%cFrequ [Hz] %c %-4d", cursor[1], SEPARATOR, ParamDisplay.Frequence);
+            printf_lcd("%cFrequ [Hz] %c %-4d  ", cursor[1], SEPARATOR, ParamDisplay.Frequence);
             lcd_gotoxy(1,3);
             printf_lcd("%cAmpli [mV] %c %-5d", cursor[2], SEPARATOR, ParamDisplay.Amplitude);
             lcd_gotoxy(1,4);
@@ -444,7 +444,8 @@ void MENU_DemandeSave(void)
     lcd_bl_on();
     lcd_ClearLine(1);
     lcd_gotoxy(1,2);
-    printf_lcd("#Parameters Saved# ");
+    printf_lcd(" #Parameters Saved# ");
     lcd_ClearLine(3);
     lcd_ClearLine(4);
+    
 }

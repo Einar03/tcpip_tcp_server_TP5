@@ -71,7 +71,7 @@ void GetMessage(uint8_t *USBReadBuffer, S_ParamGen *pParam, bool *SaveTodo)
         
         // Recupération de la sauvegarde
         PtValue = strstr((char*)USBReadBuffer, "W=");
-        PtValue += 3;
+        PtValue += 2;
         // conversion de la valeur de sauvegarde en int 
         // Si égal 0 save à false sinon true
         if((atoi(PtValue)) == 0)

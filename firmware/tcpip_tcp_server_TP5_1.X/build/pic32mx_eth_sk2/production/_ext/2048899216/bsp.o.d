@@ -52,7 +52,7 @@ build/pic32mx_eth_sk2/production/_ext/2048899216/bsp.o: \
  ../../../../../framework/peripheral/tmr/processor/../templates/tmr_CounterAsyncWriteControl_Default.h \
  ../../../../../framework/peripheral/tmr/processor/../templates/tmr_CounterAsyncWriteInProgress_Default.h \
  ../../../../../framework/peripheral/tmr/processor/../templates/tmr_TimerOperationMode_Default.h \
- ../../../../../framework/system/devcon/sys_devcon.h \
+ ../src/system_config/pic32mx_eth_sk2/framework/system/devcon/sys_devcon.h \
  ../../../../../framework/system/system.h \
  ../../../../../framework/system/common/sys_common.h \
  ../../../../../framework/system/common/sys_module.h \
@@ -180,7 +180,7 @@ build/pic32mx_eth_sk2/production/_ext/2048899216/bsp.o: \
 
 ../../../../../framework/peripheral/tmr/processor/../templates/tmr_TimerOperationMode_Default.h:
 
-../../../../../framework/system/devcon/sys_devcon.h:
+../src/system_config/pic32mx_eth_sk2/framework/system/devcon/sys_devcon.h:
 
 ../../../../../framework/system/system.h:
 

@@ -209,6 +209,9 @@ bool GetTCPFlagState(void);
 
 void APPGEN_Tasks( void );
 
+void ResetIP_Flag(void);
+void SetIP_Flag(void);
+void Update_IP(uint8_t *adresse);
 
 #endif /* _APPGEN_H */
 

@@ -1,10 +1,9 @@
 build/pic32mx_eth_sk2/production/_ext/1798756562/sys_reset.o: \
  ../src/system_config/pic32mx_eth_sk2/framework/system/reset/src/sys_reset.c \
- ../../../../../framework/system/reset/sys_reset.h \
+ ../src/system_config/pic32mx_eth_sk2/framework/system/reset/sys_reset.h \
  ../../../../../framework/system/system.h \
  ../../../../../framework/system/common/sys_common.h \
  ../../../../../framework/system/common/sys_module.h \
- ../../../../../framework/system/reset/sys_reset_definitions_pic32m.h \
  ../../../../../framework/peripheral/reset/plib_reset.h \
  ../../../../../framework/peripheral/reset/processor/reset_processor.h \
  ../../../../../framework/peripheral/reset/processor/reset_p32xxxx.h \
@@ -17,7 +16,7 @@ build/pic32mx_eth_sk2/production/_ext/1798756562/sys_reset.o: \
  ../../../../../framework/peripheral/reset/processor/../templates/reset_NmiControl_Unsupported.h \
  ../../../../../framework/peripheral/reset/processor/../templates/reset_WdtoInSleep_Unsupported.h \
  ../../../../../framework/peripheral/reset/processor/../templates/reset_NmiCounter_Unsupported.h \
- ../../../../../framework/system/devcon/sys_devcon.h \
+ ../src/system_config/pic32mx_eth_sk2/framework/system/devcon/sys_devcon.h \
  ../../../../../framework/peripheral/devcon/plib_devcon.h \
  ../../../../../framework/peripheral/devcon/processor/devcon_processor.h \
  ../../../../../framework/peripheral/devcon/processor/devcon_p32xxxx.h \
@@ -38,15 +37,13 @@ build/pic32mx_eth_sk2/production/_ext/1798756562/sys_reset.o: \
  ../../../../../framework/peripheral/devcon/processor/../templates/devcon_HSUARTControl_Unsupported.h \
  ../../../../../framework/peripheral/devcon/processor/../templates/devcon_BootSelection_Unsupported.h
 
-../../../../../framework/system/reset/sys_reset.h:
+../src/system_config/pic32mx_eth_sk2/framework/system/reset/sys_reset.h:
 
 ../../../../../framework/system/system.h:
 
 ../../../../../framework/system/common/sys_common.h:
 
 ../../../../../framework/system/common/sys_module.h:
-
-../../../../../framework/system/reset/sys_reset_definitions_pic32m.h:
 
 ../../../../../framework/peripheral/reset/plib_reset.h:
 
@@ -72,7 +69,7 @@ build/pic32mx_eth_sk2/production/_ext/1798756562/sys_reset.o: \
 
 ../../../../../framework/peripheral/reset/processor/../templates/reset_NmiCounter_Unsupported.h:
 
-../../../../../framework/system/devcon/sys_devcon.h:
+../src/system_config/pic32mx_eth_sk2/framework/system/devcon/sys_devcon.h:
 
 ../../../../../framework/peripheral/devcon/plib_devcon.h:
 

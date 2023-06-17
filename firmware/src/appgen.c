@@ -98,6 +98,9 @@ static bool TCPConnected = false;     // Flag pour l'état du TCP
 static bool SaveData = false; // Flag pour la sauvegarde en mode remote
 // Tableu pour la réception des données de l'USB (app.c))
 uint8_t ReceiveMessageString[30] = "!S=CF=1122A=33445O=+5566WP=0#";
+bool flag_IP = false;
+
+IPV4_ADDR  ipAddr;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -159,7 +162,10 @@ void APPGEN_Tasks ( void )
 {
     // Variables locales
     // Tableau pour sauvegarder le message à envoyer
-    static uint8_t MessageString[30] = "!S=0F=0000A=00000O=+0000WP=1#";
+    uint8_t MessageString[30] = "!S=0F=0000A=00000O=+0000WP=1#";
+    // Variables
+    static uint16_t count = 0;
+    static bool RemoteSave = false;
     
     /* Check the application's current state. */
     switch ( appgenData.state )
@@ -207,6 +213,7 @@ void APPGEN_Tasks ( void )
 
         case APPGEN_STATE_SERVICE_TASKS:
         {
+            LED_0Toggle();
             // Si des nouvelles donnees ont ete recues
             if (appgenData.newDataReceived == true)
             {
@@ -215,24 +222,69 @@ void APPGEN_Tasks ( void )
                 GetMessage(ReceiveMessageString, &RemoteParamGen, &SaveData);
                 if(SaveData == true)
                 {
+                    RemoteParamGen.Magic = MAGIC;
                     I2C_WriteSEEPROM(&RemoteParamGen, 0x00, 16);
+                    RemoteSave = true;
+                    
                 }
                 SendMessage(MessageString, &RemoteParamGen, &SaveData);
             }
-            // Execution du menu en local ou remote
-            // ====================================
-            // Si USB connecte => mode remote
-            if(TCPConnected == true)
+            if(RemoteSave == true)
             {
-                MENU_Execute(&RemoteParamGen, REMOTE);
-                NewParamGen = RemoteParamGen;
+                count++;
+                if(count == 1)
+                {
+                    MENU_DemandeSave();
+                }
+                if(count == 300)
+                {
+                    count = 0;
+                    RemoteSave = false;
+                }
             }
-            // Si non mode local
+            // Détection de nouvelle adresse IP
+            else if (flag_IP == true)
+            {         
+               //Variables
+               count++;
+               
+               // Affichage de l'adresse IP
+               if(count == 1)
+               {
+                   // Mise en forme LCD pour l'adresse IP
+                   lcd_bl_on();
+                   lcd_ClearLine(1);
+                   lcd_gotoxy(1,2);
+                   printf_lcd("   Adr. IP          ");
+                   lcd_gotoxy(1,3);
+                   printf_lcd(" IP:%03d.%03d.%03d.%03d ", ipAddr.v[0], ipAddr.v[1], ipAddr.v[2], ipAddr.v[3]); 
+                   lcd_ClearLine(4);
+               }
+               if(count == 500)
+               {
+                    // Remise à zéro du flag IP
+                    flag_IP = false;
+                    count = 0;
+               }
+            }
             else
             {
-                MENU_Execute(&LocalParamGen, LOCAL);
-                NewParamGen = LocalParamGen;
+                // Execution du menu en local ou remote
+                // ====================================
+                // Si USB connecte => mode remote
+                if(TCPConnected == true)
+                {
+                    MENU_Execute(&RemoteParamGen, REMOTE);
+                    NewParamGen = RemoteParamGen;
+                }
+                // Si non mode local
+                else
+                {
+                    MENU_Execute(&LocalParamGen, LOCAL);
+                    NewParamGen = LocalParamGen;
+                }
             }
+            
             
             // Execution du générateur avec les valeurs locales ou remote
             // Si les données sont différentes, mettre à jour le signal de sortie
@@ -296,6 +348,24 @@ bool GetTCPFlagState(void)
     return TCPConnected;
 }
 
+void SetIP_Flag(void)
+{
+    flag_IP = true;
+}
+void ResetIP_Flag(void)
+{
+    flag_IP = false;
+}
+
+
+
+// Pour copier le message de l'adresse IP (tableau de app.c)
+void Update_IP(uint8_t *adresse)
+{
+    // Variables locales
+    
+    strncpy((char*)ipAddr.v, (char*)adresse, 4);
+}
 /*******************************************************************************
  End of File
  */

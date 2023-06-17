@@ -85,6 +85,7 @@ void __ISR(_TIMER_1_VECTOR, ipl3AUTO) IntHandlerDrvTmrInstance1(void)
     static uint16_t Timer1Counter = 0;
     static bool FlagInit = 0;
     
+    //LED_0Toggle();
     // =================================
     //           Initialisation
     // =================================
@@ -105,7 +106,8 @@ void __ISR(_TIMER_1_VECTOR, ipl3AUTO) IntHandlerDrvTmrInstance1(void)
     // =================================
     else
     {
-        if(Timer1Counter < (MACHINE_CYCLE-2))
+        
+        if(Timer1Counter < (MACHINE_CYCLE-1))
         {
           Timer1Counter++;
         }
@@ -122,6 +124,7 @@ void __ISR(_TIMER_1_VECTOR, ipl3AUTO) IntHandlerDrvTmrInstance1(void)
         }
     }
     //LED1_W = !LED1_R;
+    //BSP_LEDOff(BSP_LED_0);
     PLIB_INT_SourceFlagClear(INT_ID_0,INT_SOURCE_TIMER_1);
 }
 void __ISR(_TIMER_3_VECTOR, ipl7AUTO) IntHandlerDrvTmrInstance2(void)

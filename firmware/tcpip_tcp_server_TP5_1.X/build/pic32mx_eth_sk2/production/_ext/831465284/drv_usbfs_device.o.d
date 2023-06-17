@@ -153,7 +153,7 @@ build/pic32mx_eth_sk2/production/_ext/831465284/drv_usbfs_device.o: \
  ../../../../../framework/osal/osal.h \
  ../../../../../framework/osal/osal_definitions.h \
  ../../../../../framework/osal/osal_impl_basic.h \
- ../../../../../framework/system/devcon/sys_devcon.h \
+ ../src/system_config/pic32mx_eth_sk2/framework/system/devcon/sys_devcon.h \
  ../../../../../framework/peripheral/osc/plib_osc.h \
  ../../../../../framework/peripheral/osc/processor/osc_processor.h \
  ../../../../../framework/peripheral/osc/processor/osc_p32xxxx.h \
@@ -515,7 +515,7 @@ build/pic32mx_eth_sk2/production/_ext/831465284/drv_usbfs_device.o: \
 
 ../../../../../framework/osal/osal_impl_basic.h:
 
-../../../../../framework/system/devcon/sys_devcon.h:
+../src/system_config/pic32mx_eth_sk2/framework/system/devcon/sys_devcon.h:
 
 ../../../../../framework/peripheral/osc/plib_osc.h:
 

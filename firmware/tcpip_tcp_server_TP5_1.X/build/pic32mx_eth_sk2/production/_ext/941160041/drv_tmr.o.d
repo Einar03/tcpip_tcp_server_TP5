@@ -57,10 +57,9 @@ build/pic32mx_eth_sk2/production/_ext/941160041/drv_tmr.o: \
  ../src/system_config/pic32mx_eth_sk2/system_definitions.h \
  ../../../../../framework/system/common/sys_common.h \
  ../../../../../framework/system/common/sys_module.h \
- ../../../../../framework/system/devcon/sys_devcon.h \
+ ../src/system_config/pic32mx_eth_sk2/framework/system/devcon/sys_devcon.h \
  ../../../../../framework/system/system.h \
- ../../../../../framework/system/reset/sys_reset.h \
- ../../../../../framework/system/reset/sys_reset_definitions_pic32m.h \
+ ../src/system_config/pic32mx_eth_sk2/framework/system/reset/sys_reset.h \
  ../../../../../framework/peripheral/reset/plib_reset.h \
  ../../../../../framework/peripheral/reset/processor/reset_processor.h \
  ../../../../../framework/peripheral/reset/processor/reset_p32xxxx.h \
@@ -450,13 +449,11 @@ build/pic32mx_eth_sk2/production/_ext/941160041/drv_tmr.o: \
 
 ../../../../../framework/system/common/sys_module.h:
 
-../../../../../framework/system/devcon/sys_devcon.h:
+../src/system_config/pic32mx_eth_sk2/framework/system/devcon/sys_devcon.h:
 
 ../../../../../framework/system/system.h:
 
-../../../../../framework/system/reset/sys_reset.h:
-
-../../../../../framework/system/reset/sys_reset_definitions_pic32m.h:
+../src/system_config/pic32mx_eth_sk2/framework/system/reset/sys_reset.h:
 
 ../../../../../framework/peripheral/reset/plib_reset.h:
 

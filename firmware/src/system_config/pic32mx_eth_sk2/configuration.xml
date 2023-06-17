@@ -1548,7 +1548,7 @@
         <Name dnOrder="0">system_interrupt.c</Name>
         <Path dnOrder="1">Source&amp;#160;Files/app/system_config/pic32mx_eth_sk2</Path>
         <Checksum dnOrder="2">6CA28EAB56AAA13C857AEF2BA90678F1</Checksum>
-        <ProjectFileChecksum dnOrder="3">B24DE0E55E17C6F3F79B0B0DE3D4BBA7</ProjectFileChecksum>
+        <ProjectFileChecksum dnOrder="3">8B99583ED421671E19EFC72BBF2E6CAA</ProjectFileChecksum>
       </Template>
       <Template dnOrder="14">
         <Name dnOrder="0">sys_ports_static.c</Name>
@@ -1567,16 +1567,16 @@
       <Template dnOrder="17">
         <Name dnOrder="0">system_config.h</Name>
         <Path dnOrder="1">Header&amp;#160;Files/app/system_config/pic32mx_eth_sk2</Path>
-        <Checksum dnOrder="2">EB4D94C348D633A7728C26FA92433D88</Checksum>
+        <Checksum dnOrder="2">46C3887D84DCEC61B5DC710DB8FB510F</Checksum>
       </Template>
     </Templates>
     <CompilerItems dnOrder="2">
       <C32 dnOrder="0">
-        <Include dnOrder="0" value="C:\microchip\harmony\v2_06\apps\tcpip\tcpip_tcp_server_TP5\firmware\src"/>
-        <Include dnOrder="1" value="C:\microchip\harmony\v2_06\apps\tcpip\tcpip_tcp_server_TP5\firmware\src\system_config\pic32mx_eth_sk2"/>
-        <Include dnOrder="2" value="C:\microchip\harmony\v2_06\apps\tcpip\tcpip_tcp_server_TP5\firmware\src\pic32mx_eth_sk2"/>
+        <Include dnOrder="0" value="C:\microchip\harmony\v2_06\apps\tcpip\tcpip_tcp_server_TP5_GIT\firmware\src"/>
+        <Include dnOrder="1" value="C:\microchip\harmony\v2_06\apps\tcpip\tcpip_tcp_server_TP5_GIT\firmware\src\system_config\pic32mx_eth_sk2"/>
+        <Include dnOrder="2" value="C:\microchip\harmony\v2_06\apps\tcpip\tcpip_tcp_server_TP5_GIT\firmware\src\pic32mx_eth_sk2"/>
         <Include dnOrder="3" value="C:\microchip\harmony\v2_06\framework"/>
-        <Include dnOrder="4" value="C:\microchip\harmony\v2_06\apps\tcpip\tcpip_tcp_server_TP5\firmware\src\system_config\pic32mx_eth_sk2\framework"/>
+        <Include dnOrder="4" value="C:\microchip\harmony\v2_06\apps\tcpip\tcpip_tcp_server_TP5_GIT\firmware\src\system_config\pic32mx_eth_sk2\framework"/>
         <Include dnOrder="5" value="../../../../../bsp/pic32mx_skes"/>
       </C32>
     </CompilerItems>
