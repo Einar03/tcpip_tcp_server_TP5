@@ -228,7 +228,8 @@ void APP_Tasks ( void )
                 break;
             }
             //=============================================================================================================================
-            //                                                  Code du cours
+            //                                                  Code du cours 
+            // pour détecter une fermeture non propre de la part du client ou une interruption du réseau
             //=============================================================================================================================
             appData.keepAlive.keepAliveEnable = true;
             appData.keepAlive.keepAliveTmo = 1000;
@@ -260,6 +261,11 @@ void APP_Tasks ( void )
 
         case APP_TCPIP_SERVING_CONNECTION:
         {
+            //********************************************
+            // Contrôle de l'état de la connection TCPIP
+            // en cas d'un fermeture propre
+            // le client demande la fermeture de la connexion
+            //********************************************
             if (!TCPIP_TCP_IsConnected(appData.socket))
             {
                 appData.state = APP_TCPIP_CLOSING_CONNECTION;
@@ -276,7 +282,7 @@ void APP_Tasks ( void )
             // Figure out how many bytes have been received and how many we can transmit.
             wMaxGet = TCPIP_TCP_GetIsReady(appData.socket);	// Get TCP RX FIFO byte count
             wMaxPut = TCPIP_TCP_PutIsReady(appData.socket);	// Get TCP TX FIFO free space
-
+            
             // Make sure we don't take more bytes out of the RX FIFO than we can put into the TX FIFO
             if(wMaxPut < wMaxGet)
                     wMaxGet = wMaxPut;
@@ -295,6 +301,9 @@ void APP_Tasks ( void )
                 TCPIP_TCP_ArrayGet(appData.socket, AppBuffer, wCurrentChunk);
                 APPGEN_ReadDatasFromTCPBuffer(AppBuffer);
                 
+                // *********************************************************************
+                // Code de l'exemple pour renvoyer le caractère reçu en majuscule
+                // *********************************************************************
 //                // Perform the "ToUpper" operation on each data byte
 //                for(w2 = 0; w2 < wCurrentChunk; w2++)
 //                {
@@ -311,22 +320,26 @@ void APP_Tasks ( void )
 //                    }
 //                }
                 
-                //=========================================================================================
-                if(appData.SendReady == true)
-                {
-                    ResetSendFlag();
-                    SYS_CONSOLE_PRINT("Server Sending %s\r\n", MessageTxt);
-                    TCPIP_TCP_ArrayPut(appData.socket, MessageTxt, wCurrentChunk);
-                    TCPIP_TCP_ArrayPut(appData.socket, (uint8_t*)"\r", 1);
-                    TCPIP_TCP_ArrayPut(appData.socket, (uint8_t*)"\n", 1);
-                }
-                //=========================================================================================
+                
                 // Transfer the data out of our local processing buffer and into the TCP TX FIFO.
 //                SYS_CONSOLE_PRINT("Server Sending %s\r\n", AppBuffer);
 //                TCPIP_TCP_ArrayPut(appData.socket, AppBuffer, wCurrentChunk);
 
                 // No need to perform any flush.  TCP data in TX FIFO will automatically transmit itself after it accumulates for a while.  If you want to decrease latency (at the expense of wasting network bandwidth on TCP overhead), perform and explicit flush via the TCPFlush() API.
             }
+            //=========================================================================================
+            //*****************************************************************************************
+            // Envoie de la trame pour quitancer et contrôler la réception du message au client
+            //*****************************************************************************************
+            if(appData.SendReady == true)
+            {
+                ResetSendFlag();
+                SYS_CONSOLE_PRINT("Server Sending %s\r\n", MessageTxt);
+                TCPIP_TCP_ArrayPut(appData.socket, MessageTxt, wCurrentChunk);
+                TCPIP_TCP_ArrayPut(appData.socket, (uint8_t*)"\r", 1);
+                TCPIP_TCP_ArrayPut(appData.socket, (uint8_t*)"\n", 1);
+            }
+            //=========================================================================================
         }
         break;
         case APP_TCPIP_CLOSING_CONNECTION:
@@ -356,12 +369,6 @@ void ResetSendFlag(void)
 // Pour copier le message du générateur dans MessageTxt (tableau de app.c)
 void Update_Message(uint8_t *message)
 {
-    // Variables locales
-    //uint8_t i = 0;
-    //for(i = 0; i < 28; i++)
-    //{
-    //    MessageTxt[i] = message[i];
-    //}
     strncpy((char*)MessageTxt, (char*)message, 29);
 }
  

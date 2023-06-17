@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<project>                                  
+  <executable name="dist/pic32mx_eth_sk2/debug/tcpip_tcp_server_TP5_1.X.debug.elf">                 
+    <memory name="program">                 
+      <units>bytes</units>                 
+      <length>531968</length>                 
+      <used>358784</used>                     
+      <free>173184</free>                     
+    </memory>                              
+    <memory name="data">              
+      <units>bytes</units>                 
+      <length>131584</length>                 
+      <used>7992</used>                     
+      <free>123592</free>                     
+    </memory>                              
+  </executable>                            
+</project>                                 
