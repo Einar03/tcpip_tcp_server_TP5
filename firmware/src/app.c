@@ -169,7 +169,6 @@ void APP_Tasks ( void )
                 nNets = TCPIP_STACK_NumberOfNetworksGet();
                 for(i = 0; i < nNets; i++)
                 {
-
                     netH = TCPIP_STACK_IndexToNet(i);
                     netName = TCPIP_STACK_NetNameGet(netH);
                     netBiosName = TCPIP_STACK_NetBIOSName(netH);
