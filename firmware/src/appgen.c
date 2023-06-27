@@ -97,7 +97,8 @@ S_ParamGen NewParamGen; // Pour récuperation des nouveaux paramètres
 static bool TCPConnected = false;     // Flag pour l'état du TCP
 static bool SaveData = false; // Flag pour la sauvegarde en mode remote
 // Tableu pour la réception des données de l'USB (app.c))
-uint8_t ReceiveMessageString[30] = "!S=CF=1122A=33445O=+5566WP=0#";
+uint8_t ReceiveMessageString[29] = "!S=CF=0000A=00000O=+0000W=0#";
+
 bool flag_IP = false;
 
 IPV4_ADDR  ipAddr;
@@ -162,7 +163,7 @@ void APPGEN_Tasks ( void )
 {
     // Variables locales
     // Tableau pour sauvegarder le message à envoyer
-    uint8_t MessageString[30] = "!S=0F=0000A=00000O=+0000WP=1#";
+    uint8_t MessageString[30] = "!S=0F=0000A=00000O=+0000WP=0#";
     // Variables
     static uint16_t count = 0;
     static bool RemoteSave = false;

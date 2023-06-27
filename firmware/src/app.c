@@ -82,7 +82,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 
 APP_DATA appData;
-uint8_t MessageTxt[30] = "!S=TF=2000A=10000O=+5000WP=0#"; // 29 caracteres
+uint8_t MessageTxt[32] = "!S=TF=0000A=00000O=+0000WP=0#\r\n"; // 29 caracteres + CR + LF
 //bool SendReady = false; 
 
 
@@ -320,7 +320,6 @@ void APP_Tasks ( void )
 //                    }
 //                }
                 
-                
                 // Transfer the data out of our local processing buffer and into the TCP TX FIFO.
 //                SYS_CONSOLE_PRINT("Server Sending %s\r\n", AppBuffer);
 //                TCPIP_TCP_ArrayPut(appData.socket, AppBuffer, wCurrentChunk);
@@ -335,9 +334,7 @@ void APP_Tasks ( void )
             {
                 ResetSendFlag();
                 SYS_CONSOLE_PRINT("Server Sending %s\r\n", MessageTxt);
-                TCPIP_TCP_ArrayPut(appData.socket, MessageTxt, wCurrentChunk);
-                TCPIP_TCP_ArrayPut(appData.socket, (uint8_t*)"\r", 1);
-                TCPIP_TCP_ArrayPut(appData.socket, (uint8_t*)"\n", 1);
+                TCPIP_TCP_ArrayPut(appData.socket, MessageTxt, sizeof(MessageTxt));
             }
             //=========================================================================================
         }
